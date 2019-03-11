@@ -1,0 +1,3 @@
+2-3 sentence description of what you are doing for the project.
+
+Of the two options for the final project we are implementing the search engine for twitter. We will be creating this search engine using python, lucene, and various libraries to help with the twitter APIs. 

@@ -1,0 +1,7 @@
+outlining:
+- problems you tackled
+- design of your system
+- results
+- Collaboration Details
+	- clearly specify the contributions of each member of the team
+	- github repo reflect contributions outlined in section
