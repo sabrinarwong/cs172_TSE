@@ -14,6 +14,7 @@ access_token = apiKeys.access_token
 access_token_secret = apiKeys.access_token_secret
 consumer_key = apiKeys.consumer_key
 consumer_secret = apiKeys.consumer_secret
+
 #Basic listener that just prints received tweeets to stdout
 class StdOutListener(StreamListener):
 	def on_data(self, data):
