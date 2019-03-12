@@ -5,3 +5,7 @@ outlining:
 - Collaboration Details
 	- clearly specify the contributions of each member of the team
 	- github repo reflect contributions outlined in section
+
+	Sabrina
+	- use twitter stream api to get geolocated tweets and store in one large file, limiting crawling until 1GB
+	
