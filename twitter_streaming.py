@@ -4,16 +4,16 @@
 from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
+import apiKeys
 
 import os
 
 
 #Variables that contains the user credentials to access Twitter API
-access_token = "183381422-XZnxzRvnqFy68PZ3AWhpxiRZBEI1HeHIuHH1fIs9"
-access_token_secret = "kyrjqhraiV9RA4SAzKM5W4jQ6V2OMPRpG3aM19rKTmAUG"
-consumer_key = "ToMHR0tsQzfpaKIoBXuKm2n1J"
-consumer_secret = "rmuka0OxWTvQzYzKEqLEKW835NLE5nxfxFr5dtV4EgPztwYiFt"
-
+access_token = apiKeys.access_token
+access_token_secret = apiKeys.access_token_secret
+consumer_key = apiKeys.consumer_key
+consumer_secret = apiKeys.consumer_secret
 #Basic listener that just prints received tweeets to stdout
 class StdOutListener(StreamListener):
 	def on_data(self, data):
