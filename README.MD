@@ -23,7 +23,7 @@ Included in this repo is:
 
 
 ## Issues
-1. adding the titles of URL as attribute to JSON
+1. adding the titles of URL as attribute to JSON, instead it is added into elastic search when indexing
 
 ## Assumptions
 
