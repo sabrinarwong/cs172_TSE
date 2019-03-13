@@ -1,5 +1,7 @@
 outlining:
 - problems you tackled
+	if title is in a different language, beautifulsoup will return in unicode
+	could not add url titles into json but able to do it after into elastic search
 - design of your system
 - results
 - Collaboration Details
