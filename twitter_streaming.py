@@ -41,7 +41,7 @@ def GetUrlTitles(string):
 #Basic listener that just prints received tweeets to stdout
 class StdOutListener(StreamListener):
 	def on_data(self, data):
-		if os.path.getsize(filename) < 100000: #1,000,000
+		if os.path.getsize(filename) < 1000000: #1,000,000
 			with open(filename1, 'w+') as t:
 				t.write(data)
 				tweet = json.loads(data)

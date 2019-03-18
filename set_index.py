@@ -82,7 +82,7 @@ if __name__ == '__main__':
 		      		"title" : { "type" : "string" },
 		        	"title_suggest" : {
 		         		"type" :     "completion",
-			          	"analyzer" :  "standard",
+			          	"analyzer" :  "case_insensitive_sort",
 			          	"search_analyzer" : "standard",
 			          	"preserve_position_increments": False,
 			          	"preserve_separators": False

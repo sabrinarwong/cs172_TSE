@@ -30,6 +30,9 @@ def index():
             search_term = request.form["input"]
             print("Search Term:", search_term)
             payload = {
+                "sort":[
+                    {"_score": "desc"}
+                ],
                 "query": {
                     "multi_match":{
                         # "_all": search_term,

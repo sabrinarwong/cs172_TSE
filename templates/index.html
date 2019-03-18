@@ -107,7 +107,7 @@
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
-          	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="1500">0</span> tweets pulled from San Francisco!</p>
+          	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="1500">{{res['hits']['total']}}</span> tweets pulled from San Francisco!</p>
             <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">The tweets</h1>
 
 						<div class="ftco-search">
@@ -149,7 +149,8 @@
                   <h3 class="mr-3 text-black h3" style="display:inline-block">{{ hit['_source']['screen_name'] }}</h3>
                   <span class="bg-secondary text-white badge py-2 px-3"> {{ hit['_source']['location'] }}</span>
                   <div class="mb-4 mb-md-0 mr-5">
-                    <span class="bg-secondary text-white badge py-2 px-3">{{ hit['_source']['tweet'] }}</span>
+                    <span class="bg-secondary text-white badge py-2 px-3" style="display:block">{{ hit['_source']['tweet'] }}</span>
+                    <span class="bg-secondary text-white badge py-2 px-3"> {{ hit['_source']['timestamp'] }}</span>
                   </div>
                 </div>
             </div>

@@ -2,12 +2,15 @@ version: '3'
 services:
   # web:
   #   build: ./app.py
-  #   entrypoint:
-  #       - flask
-  #       - run
+    # entrypoint:
+    #     - flask
+    #     - run
   #       - --host=0.0.0.0
   #   ports: ['5000:5000']
   #   volumes: ['./:/app']
+    # watch:
+    #   - *.py
+    #   - *.html
 
   elasticsearch:
     image: "elasticsearch:5"
