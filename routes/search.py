@@ -23,10 +23,7 @@ def index():
         response = requests.get(url, data=json.dumps(query),headers=headers)
         response_dict_data = json.loads(str(response.text))
         return render_template('index.html', res=response_dict_data)
-        # res ={
-        #         'hits': {'total': 0, 'hits': []}
-        #      }
-        # return render_template("index.html",res=res)
+
     elif request.method =='POST':
         if request.method == 'POST':
             print("-----------------Calling search Result----------")
@@ -34,21 +31,25 @@ def index():
             print("Search Term:", search_term)
             payload = {
                 "query": {
-                    "multi-match":{
-                        "fields": ['*'],
+                    "multi_match":{
+                        # "_all": search_term,
                         "query": search_term,
+                        "fields": ["screen_name", "tweet", "location", "hashtags"]
+                    }
+                },  
+                "highlight": {
+                    "fields": {
+                        "_all": {}
                     }
                 },
                 "size": 50,
             }
 
-            payload = json.dumps(payload)
             url = "http://elasticsearch:9200/twitter/tweets/_search"
-            response = requests.get(url, data=payload, headers=headers)
+            response = requests.get(url, data=json.dumps(payload), headers=headers)
             response_dict_data = json.loads(str(response.text))
-            return render_template('index.html', res=response_dict_data)
-
-
+            print(response_dict_data)
+            return render_template('search.html', res=response_dict_data)
 
 @search_blueprint.route("/autocomplete",methods=['POST'],endpoint='autocomplete')
 def autocomplete():

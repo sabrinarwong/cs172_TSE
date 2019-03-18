@@ -16,6 +16,7 @@ COPY . /app
 # Setting environmental path to app directory. path environment variables tells shell,
 # which directories to search for executable files.
 ENV PATH /app:$PATH
+ENV PYTHONUNBUFFERED=0
 
 # It executes the command python app.py in the app directory.
 # start gunicorn

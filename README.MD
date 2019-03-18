@@ -12,11 +12,11 @@ cd finalproject-yikes;
 docker build -t sabrinarwong/finalproject-yikes:1.0.0 .;
 docker push sabrinarwong/finalproject-yikes:1.0.0;
 docker-compose up;
+python set_index.py && python twitter_streaming.py;
 ```
 
 ## About
 Included in this repo is: 
-1. twitter_streaming.py
 
 
 ## Issues

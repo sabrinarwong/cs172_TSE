@@ -7,7 +7,6 @@ def check_if_index_present(url):
 	return json_data
 
 if __name__ == '__main__':
-# def main_set_index():
 	url = "http://localhost:9200/_template/search_engine_template"
 	response = requests.request("GET", url, data="")
 	if(len(response.text)>2):
@@ -21,9 +20,8 @@ if __name__ == '__main__':
 		},
 		"mappings":{
 			"tweets":{
-				"_source":{
-					"enabled": True
-				},
+				"_all": { "enabled": True, "store": True },
+				"_source":{ "enabled": True },
 				"properties":{
 					"tweet_id":{
 						"type": "long"
@@ -64,12 +62,12 @@ if __name__ == '__main__':
 	url = "http://localhost:9200/twitter"
 	json_data = check_if_index_present(url)
 	if(not 'error' in json_data):
-		print("3. Deleted an index: twitter")
+		print("1. Deleted an index: twitter")
 		response = requests.request('DELETE', url)
 	
 	response = requests.request("PUT", url)
 	if(response.status_code == 200):
-		print("4. Created an index: twitter")
+		print("2. Created an index: twitter")
 
 	url = "http://localhost:9200/autocomplete"
 	json_data = check_if_index_present(url)

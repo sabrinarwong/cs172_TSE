@@ -30,7 +30,7 @@ def FindHashtag(string):
 
 def GetUrlTitles(string):
 	# urls = FindURL(string);
-	print(string)
+	# print(string)
 	urlTitles = []
 	if string:
 		for url in string:
@@ -61,12 +61,12 @@ def parseToES(tweet):
 		post_autocomplete_url = "http://localhost:9200/autocomplete/tweets"
 
 		if tweet['truncated']:
-			print("extended")
+			# print("extended")
 			text = tweet['extended_tweet']['full_text']
 			hashtags = tweet['extended_tweet']['entities']['hashtags']
 			urls = tweet['extended_tweet']['entities']['urls']
 		else:
-			print("not extended")
+			# print("not extended")
 			text = tweet['text']
 			hashtags = tweet['entities']['hashtags']
 			urls = tweet['entities']['urls']
@@ -76,7 +76,6 @@ def parseToES(tweet):
 			'screen_name': tweet['user']['screen_name'],
 			'location': tweet['place']['full_name'],
 			'tweet': text,
-			# 'hashtags': [hashtag['text'] for hashtag in hashtags],
 			'timestamp': tweet['created_at'],
 		}
 
@@ -86,8 +85,6 @@ def parseToES(tweet):
 			'location': tweet['place']['full_name'],
 			'suggested_location': tweet['place']['full_name'],
 			'tweet': text,
-			# 'hashtags': [hashtag['text'] for hashtag in hashtags],
-			# 'suggested_hashtags': [hashtag['text'] for hashtag in hashtags],
 		}
 
 		if hashtags:
@@ -110,21 +107,17 @@ def parseToES(tweet):
 		response = requests.request("POST", post_url, data=dic, headers=headers)
 		response_autocomplete = requests.request("POST", post_autocomplete_url, data=dic_autocomplete, headers=headers)
 
-		if(response.status_code==201):
-			print("Values Posted in twitter index")
-		if(response_autocomplete.status_code==201):
-			print("Values Posted in autocmplete index")
+		# if(response.status_code==201):
+		# 	print("Values Posted in twitter index")
+		# if(response_autocomplete.status_code==201):
+		# 	print("Values Posted in autocmplete index")
 
-		# # insert into elasticsearch
-		# es.index(index = "twitter", doc_type = 'tweet', id = string['id'], body = dic)
-		# print(json.dumps(dic, ensure_ascii = False))
 	except:
 		import traceback
 		traceback.print_exc()
 		pass
 
 if __name__ == '__main__':
-# def main_twitter_stream():
 	l = StdOutListener()
 	auth = OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
@@ -133,11 +126,8 @@ if __name__ == '__main__':
 	# initialize
 	if filename and filename1 :#and es.indices.exists(index = 'twitter'):
 		os.remove(filename)		# big json file
-		# print("File removed")
 		os.remove(filename1)	# indivisual json to index
-		# print("file1 removed")
-		# es.indices.delete(index='twitter', ignore=[400, 404])
-		# # print("Index deleted")
+
 
 	#filter Twitter Streams to capture data by location (san francisco) 
 	with open(filename, "a+") as tf:
