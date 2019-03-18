@@ -108,7 +108,7 @@
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
           	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="1500">0</span> tweets pulled from San Francisco!</p>
-            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">Here are the tweets</h1>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">The tweets</h1>
 
 						<div class="ftco-search">
 							<div class="row">
@@ -122,13 +122,6 @@
   			              				<div class="form-field">
   			              					<div class="icon"><span class="icon-search"></span></div>
   							                <input id="user_input"  name="input" type="text" class="form-control" placeholder="Search for a tweet...">
-  	<!-- 						              </div>
-  						              </div>
-  		              			</div>
-
-                          <div class="col-md-3">
-                            <div class="form-group">
-                              <div class="form-field"> -->
                                 <input id="submit" type="submit" value="Search" class="form-control btn btn-primary">
                               </div>
                             </div>
@@ -153,27 +146,13 @@
             <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
               <div class="mb-4 mb-md-0 mr-5">
                 <div class="job-post-item-header d-flex align-items-center">
-                  <h2 class="mr-3 text-black h3">{{ hit['_source']['screen_name'] }}</h2>
-                  <div class="badge-wrap">
-                    {% for label in  hit['_source']['text']  %}
-                    <span class="bg-secondary text-white badge py-2 px-3">{{label}}</span>
-                    {% endfor %}
+                  <h3 class="mr-3 text-black h3" style="display:inline-block">{{ hit['_source']['screen_name'] }}</h3>
+                  <span class="bg-secondary text-white badge py-2 px-3"> {{ hit['_source']['location'] }}</span>
+                  <div class="mb-4 mb-md-0 mr-5">
+                    <span class="bg-secondary text-white badge py-2 px-3">{{ hit['_source']['tweet'] }}</span>
+
                   </div>
                 </div>
-                <div class="job-post-item-body d-block d-md-flex">
-                  <div class="mr-3">
-                    <i class="fa fa-arrow-up" aria-hidden="true"></i>
-                    <span>{{ hit['_source']['hashtags'] }}</span>
-                  </div>
-                  <div>
-                    <span class="icon-layers"></span>
-                    <a href="/"> {{ hit['_source']['location'] }}</a>
-                  </div>
-                </div>
-              </div>
-              <div class="ml-auto d-flex">
-                <a href="{{ hit['_source']['url'] }}" target="_blank" class="btn btn-primary py-2 mr-1">Tweet Tweet</a>
-              </div>
             </div>
           </div><!-- end -->
         {% endfor %}
@@ -186,7 +165,7 @@
         <div class="row">
           <div class="col-md-12 text-center">
             <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              Copyright &copy;<script>document.write(new Date().getFullYear());</script> Made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://github.com/CS172-UCR/finalproject-yikesm" target="_blank">Sabrina Wong</a>, UCR-CS172
+              Copyright &copy;<script>document.write(new Date().getFullYear());</script> Made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://github.com/CS172-UCR/finalproject-yikes" target="_blank">Sabrina Wong</a>, UCR-CS172
             </p>
           </div>
         </div>

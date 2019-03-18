@@ -13,10 +13,20 @@ headers = {
 @search_blueprint.route("/",methods=['GET','POST'],endpoint='index')
 def index():
     if request.method=='GET':
-        res ={
-                'hits': {'total': 0, 'hits': []}
-             }
-        return render_template("index.html",res=res)
+        url = "http://elasticsearch:9200/twitter/tweets/_search"
+        query = {
+            "query": {
+                "match_all": {}
+            },
+            "size": 50
+        }
+        response = requests.get(url, data=json.dumps(query),headers=headers)
+        response_dict_data = json.loads(str(response.text))
+        return render_template('index.html', res=response_dict_data)
+        # res ={
+        #         'hits': {'total': 0, 'hits': []}
+        #      }
+        # return render_template("index.html",res=res)
     elif request.method =='POST':
         if request.method == 'POST':
             print("-----------------Calling search Result----------")
@@ -24,22 +34,20 @@ def index():
             print("Search Term:", search_term)
             payload = {
                 "query": {
-                    "query_string": {
-                        "analyze_wildcard": True,
-                        "query": str(search_term),
-                        "fields": ["screen_name", "location", "tweet", "hashtags", "urlTitles"]
+                    "multi-match":{
+                        "fields": ['*'],
+                        "query": search_term,
                     }
                 },
                 "size": 50,
-                "sort": [
-
-                ]
             }
+
             payload = json.dumps(payload)
-            url = "http://elasticsearch:9200/twitter/tweet/_search"
-            response = requests.request("GET", url, data=payload, headers=headers)
+            url = "http://elasticsearch:9200/twitter/tweets/_search"
+            response = requests.get(url, data=payload, headers=headers)
             response_dict_data = json.loads(str(response.text))
             return render_template('index.html', res=response_dict_data)
+
 
 
 @search_blueprint.route("/autocomplete",methods=['POST'],endpoint='autocomplete')

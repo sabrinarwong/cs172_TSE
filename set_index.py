@@ -34,7 +34,7 @@ if __name__ == '__main__':
 					"location":{
 						"type": "text"
 					},
-					"text":{
+					"tweet":{
 						"type": "text"
 					},
 					"timestamp":{
