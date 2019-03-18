@@ -1,40 +1,10 @@
-# part 1 crawling
-# 	twitter streaming api to collect geolocated tweets
-# 	store in one large file
-# 
-# 	from json check if text contains a URL
-# 	if a tweet contains a url to an html page, 
-# 		get title of that page
-# 		add title as addition field of tweet (include it in JSON)
-
-# part 2 retrieval
-# 	parse json objects and insert into lucene/ES
-# 	handle fields like username, location, etc.
-# 	test for retrieval of relevant documents given a query
-
-# part 3 extension
-# 	web-based interface
-# 	- contain a textbox and search button
-# 	- list of results (first 10) and their scores > decreasing order
-# 	- twitter:
-#		order by combination of time and relevance
-#		describe ranking function
-# 	use web dev of choice
-
-#Import the necessary methods from tweepy library
+import urllib2
 from BeautifulSoup import BeautifulSoup
+import requests, json, os, re
 from tweepy import OAuthHandler, Stream
 from tweepy.streaming import StreamListener
-from elasticsearch import Elasticsearch
-
+# from random import randint
 import apiKeys		#file for apikey
-import os, re
-import json, requests, urllib2
-
-from datetime import datetime
-from flask import Flask, jsonify, request
-
- 
 
 #Variables that contains the user credentials to access Twitter API
 access_token = apiKeys.access_token
@@ -42,35 +12,8 @@ access_token_secret = apiKeys.access_token_secret
 consumer_key = apiKeys.consumer_key
 consumer_secret = apiKeys.consumer_secret
 
-filename = 'fetched_tweets.json'
-filename1 = 'tweet.json'
-
-res = requests.get('http://localhost:9200')
-# print(res.content)
-es = Elasticsearch('http://localhost:9200')
-app = Flask(__name__)
-
-@app.route('/', methods=['GET'])
-def index():
-	# results = es.get(index='twitter', doc_type='tweet',id='')
-	return '<h1>Welcome!</h1>'
-
-# fix
-@app.route('/search', methods=['POST'])
-def search():
-	keyword = request.form['keyword']
-
-	body = {
-		"query": {
-			"multi_match": {
-				"query": keyword,
-				"fields": ["screen_name", "text", "timestamp"]
-			}
-		}
-	}
-	res = es.search(index='twitter', doc_type='tweet', body=body)
-	return jsonify(res['hits']['hits'])
-
+filename = 'data/fetched_tweets.json'
+filename1 = 'data/tweet.json'
 
 # looks for URL in tweet content
 def FindURL(string): 
@@ -86,11 +29,12 @@ def FindHashtag(string):
     return hashtag
 
 def GetUrlTitles(string):
-	urls = FindURL(string);
+	# urls = FindURL(string);
+	print(string)
 	urlTitles = []
-	if urls:
-		for url in urls:
-			soup = BeautifulSoup(urllib2.urlopen(url))
+	if string:
+		for url in string:
+			soup = BeautifulSoup(urllib2.urlopen(url['url']))
 			urlTitles.append(soup.title.string)
 	return urlTitles
 
@@ -108,49 +52,92 @@ class StdOutListener(StreamListener):
 		return False
 
 	def on_error(self, status):
-		print status
+		print(status)
 
-# load json into elasticsearch
-def parseToES(string):
-
-	# json.load(string, tweet)
+# load json attributes into elasticsearch
+def parseToES(tweet):
 	try:
-		dic = {
-			'tweet_id': string['id'],
-			'screen_name': string['user']['screen_name'],
-			'text': string['text'],
-			'timestamp': string['created_at'],
-			'location': string['place']['full_name']
+		post_url = "http://localhost:9200/twitter/tweets"
+		post_autocomplete_url = "http://localhost:9200/autocomplete/tweets"
 
+		if tweet['truncated']:
+			print("extended")
+			text = tweet['extended_tweet']['full_text']
+			hashtags = tweet['extended_tweet']['entities']['hashtags']
+			urls = tweet['extended_tweet']['entities']['urls']
+		else:
+			print("not extended")
+			text = tweet['text']
+			hashtags = tweet['entities']['hashtags']
+			urls = tweet['entities']['urls']
+
+		dic = {
+			'tweet_id': tweet['id'],
+			'screen_name': tweet['user']['screen_name'],
+			'location': tweet['place']['full_name'],
+			'tweet': text,
+			# 'hashtags': [hashtag['text'] for hashtag in hashtags],
+			'timestamp': tweet['created_at'],
 		}
-		if FindHashtag(string['text']):
-			dic['hashtags'] = FindHashtag(string['text'])
-		if FindURL(string['text']):
-			dic['urlTitles'] = GetUrlTitles(string['text'])
-		es.index(index = "twitter", doc_type = 'tweet', body = dic )
-		print(json.dumps(dic, ensure_ascii = False))
+
+		dic_autocomplete = {
+			'screen_name': tweet['user']['screen_name'],
+			'suggested_screen_name': tweet['user']['screen_name'],
+			'location': tweet['place']['full_name'],
+			'suggested_location': tweet['place']['full_name'],
+			'tweet': text,
+			# 'hashtags': [hashtag['text'] for hashtag in hashtags],
+			# 'suggested_hashtags': [hashtag['text'] for hashtag in hashtags],
+		}
+
+		if hashtags:
+			dic['hashtags'] = [hashtag['text'] for hashtag in hashtags]
+			dic_autocomplete['hashtags'] = [hashtag['text'] for hashtag in hashtags]
+			dic_autocomplete['suggested_hashtags'] = [hashtag['text'] for hashtag in hashtags]
+
+		if urls:
+			dic['urlTitles'] = GetUrlTitles(urls)
+			dic_autocomplete['urlTitles'] = GetUrlTitles(urls)
+
+		headers = {
+			'Content-Type': "applicatin/json",
+			'cache-control': "no-cache"
+		}
+
+		dic = json.dumps(dic)
+		dic_autocomplete = json.dumps(dic_autocomplete)
+
+		response = requests.request("POST", post_url, data=dic, headers=headers)
+		response_autocomplete = requests.request("POST", post_autocomplete_url, data=dic_autocomplete, headers=headers)
+
+		if(response.status_code==201):
+			print("Values Posted in twitter index")
+		if(response_autocomplete.status_code==201):
+			print("Values Posted in autocmplete index")
+
+		# # insert into elasticsearch
+		# es.index(index = "twitter", doc_type = 'tweet', id = string['id'], body = dic)
+		# print(json.dumps(dic, ensure_ascii = False))
 	except:
 		import traceback
 		traceback.print_exc()
 		pass
 
-# def GetQuery(string):
-
-
 if __name__ == '__main__':
-	#handles Twitter authentification and the connection to Twitter Streaming API
+# def main_twitter_stream():
 	l = StdOutListener()
 	auth = OAuthHandler(consumer_key, consumer_secret)
 	auth.set_access_token(access_token, access_token_secret)
 	stream = Stream(auth, l)
 
-	if filename and filename1 and es.indices.exists(index = 'twitter'):
+	# initialize
+	if filename and filename1 :#and es.indices.exists(index = 'twitter'):
 		os.remove(filename)		# big json file
-		print("File removed")
+		# print("File removed")
 		os.remove(filename1)	# indivisual json to index
-		print("File1 removed")
-		es.indices.delete(index='twitter', ignore=[400, 404])
-		print("Index deleted")
+		# print("file1 removed")
+		# es.indices.delete(index='twitter', ignore=[400, 404])
+		# # print("Index deleted")
 
 	#filter Twitter Streams to capture data by location (san francisco) 
 	with open(filename, "a+") as tf:
@@ -158,6 +145,4 @@ if __name__ == '__main__':
 
 	stream.disconnect()
 
-	# parseToES()
 
-app.run(port=5000, debug=True)

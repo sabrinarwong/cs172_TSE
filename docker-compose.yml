@@ -1,0 +1,35 @@
+version: '3'
+services:
+  # web:
+  #   build: ./app.py
+  #   entrypoint:
+  #       - flask
+  #       - run
+  #       - --host=0.0.0.0
+  #   ports: ['5000:5000']
+  #   volumes: ['./:/app']
+
+  elasticsearch:
+    image: "elasticsearch:5"
+    networks:
+      - frontend
+    restart: always
+    volumes:
+      - ./ES_DATA:/usr/share/elasticsearch/data
+    environment:
+      - discovery.type=single-node
+      - bootstrap.memory_lock = true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ports:
+      - "9200:9200"
+
+  twitter:
+    image: "sabrinarwong/finalproject-yikes:1.0.0"
+    networks:
+      - frontend
+    restart: always
+    ports:
+      - "8005:8005"
+
+networks:
+  frontend:

@@ -9,12 +9,9 @@ Run the following commands:
 ```bash
 git clone https://github.com/CS172-UCR/finalproject-yikes.git;
 cd finalproject-yikes;
-py twitter_streaming.py
-```
-
-On a separate terminal:
-```bash
-elasticsearch
+docker build -t sabrinarwong/finalproject-yikes:1.0.0 .;
+docker push sabrinarwong/finalproject-yikes:1.0.0;
+docker-compose up;
 ```
 
 ## About
@@ -35,3 +32,7 @@ Sabrina Wong
 swong040@ucr.edu
 
 861195047
+
+
+<!-- docker build -t sabrinarwong/finalproject-yikes:1.0.0 .; docker push sabrinarwong/finalproject-yikes:1.0.0; docker-compose up;
+ -->
