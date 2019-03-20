@@ -15,10 +15,10 @@
 # part 3 extension
 # (good)	web-based interface (flask)
 # (good)	- contain a textbox and search button
-# (TODO)	- list of results (first 10) and their scores > decreasing order
+# (good)	- list of results (first 10) and their scores > decreasing order
 # 	- twitter:
-# (TODO)	order by combination of time and relevance
-# (TODO)	describe ranking function
+# (good)	order by combination of time and relevance
+# (god)	describe ranking function
 # (good)	use web dev of choice - flask
 
 from flask import Flask, render_template

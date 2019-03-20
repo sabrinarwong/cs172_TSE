@@ -1,7 +1,5 @@
-# TBF
-
 # Final Project
-Twitter search engine
+Twitter Search Engine
 
 ## Running PS2
 Run the following commands:
@@ -13,9 +11,11 @@ cd finalproject-yikes;
 ```
 
 ## About
-Included in this repo is: 
+Using Twitter Stream API to retrieve realtime tweets geo-tagged in the San Francisco, CA area.
 
+The `twitter_streaming.py` program streams for tweets and inserts into `fetched_tweets.json`. The index to store the retrieved tweets is created through ElasticSearch. `set_index.py` is a file that initializes the setting of the index. `insert_index.py` reads through the `fetched_tweets.json`, analyzes each json in the file, and inserts it into ElasticSeach.
 
+As an extension to the parts above, I created a web-based interface using Flask, a python web-development framework. This interface allows the user to see all the tweets retrieved from the index in the first page. Upon querying, the resulting page shows tweets relevant to the user's input and a score on the right side. Scoring, sorting, and ranking are all done with ElasticSeach. Scoring is the sum of all fields relevant to query.
 
 More information about this project in the `FinalReport.pdf`
 
