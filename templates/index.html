@@ -27,12 +27,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
   <style>
-    ul.ui-autocomplete {
-      list-style: none;
-      list-style-type: none;
-      padding: 10px;
-      margin: 10px;
-    }
+
     .ui-widget {
       font-family: Verdana,Arial,sans-serif;
       font-size: 30px;
@@ -62,10 +57,6 @@
       margin: 0;
       padding: 2px;
     }
-    .ui-autocomplete {
-      cursor: default;
-      position: absolute;
-    }
     .ui-menu .ui-menu-item {
       clear: left;
       float: left;
@@ -92,23 +83,13 @@
 
   </head>
   <body>
-<!-- 	  <nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
-	    <div class="container">
-	      <a class="navbar-brand" href="/">twitter.com</a>
-	      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
-	        <span class="oi oi-menu"></span> Menu
-	      </button>
-	    </div>
-	  </nav> -->
-    <!-- END nav -->
-
     <div class="hero-wrap js-fullheight" style="background-image: url('http://addudu.com/tumblr-banners/banner-png-tumblr-tumblr-banners/');" data-stellar-background-ratio="0.5">
       <div class="overlay"></div>
       <div class="container">
         <div class="row no-gutters slider-text js-fullheight align-items-center justify-content-start" data-scrollax-parent="true">
           <div class="col-xl-10 ftco-animate mb-5 pb-5" data-scrollax=" properties: { translateY: '70%' }">
           	<p class="mb-4 mt-5 pt-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">We have <span class="number" data-number="1500">{{res['hits']['total']}}</span> tweets pulled from San Francisco!</p>
-            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">The tweets</h1>
+            <h1 class="mb-5" data-scrollax="properties: { translateY: '30%', opacity: 1.6 }">The Tweets</h1>
 
 						<div class="ftco-search">
 							<div class="row">
@@ -121,7 +102,7 @@
   		              				<div class="form-group">
   			              				<div class="form-field">
   			              					<div class="icon"><span class="icon-search"></span></div>
-  							                <input id="user_input"  name="input" type="text" class="form-control" placeholder="Search for a tweet...">
+  							                <input id="user_input"  name="input" type="text" class="form-control" placeholder="Search for a tweet..."  autocomplete="off">
                                 <input id="submit" type="submit" value="Search" class="form-control btn btn-primary">
                               </div>
                             </div>
@@ -138,19 +119,20 @@
       </div>
     </div>
 
-		<section id="tutorial_section" class="ftco-section bg-light">
-			<div id="tutorial_lists" class="container">
-				<div class="row">
+    <section id="tutorial_section" class="ftco-section bg-light">
+      <div id="tutorial_lists" class="container">
+        <div class="row">
           {% for hit in res['hits']['hits'] %}
           <div class="col-md-12 ftco-animate">
             <div class="job-post-item bg-white p-4 d-block d-md-flex align-items-center">
               <div class="mb-4 mb-md-0 mr-5">
                 <div class="job-post-item-header d-flex align-items-center">
-                  <h3 class="mr-3 text-black h3" style="display:inline-block">{{ hit['_source']['screen_name'] }}</h3>
-                  <span class="bg-secondary text-white badge py-2 px-3"> {{ hit['_source']['location'] }}</span>
+                  <h3 class="mr-3 text-black h3" style="display:inline-block; margin-bottom:10px"">@{{ hit['_source']['screen_name'] }}</h3>
+                  <span class="bg-secondary text-white badge py-2 px-3" style="display:inline-block;"> {{ hit['_source']['location'] }}</span>
+                  <span class="bg-secondary text-white badge py-2 px-3" style="display:inline-block; margin-right:20px; float:right;">{{ hit['_score'] }}</span>
                   <div class="mb-4 mb-md-0 mr-5">
-                    <span class="bg-secondary text-white badge py-2 px-3" style="display:block">{{ hit['_source']['tweet'] }}</span>
-                    <span class="bg-secondary text-white badge py-2 px-3"> {{ hit['_source']['timestamp'] }}</span>
+                    <span class="bg-secondary text-white badge py-2 px-3" style="display:block; margin-left:30px">{{ hit['_source']['tweet'] }}</span>
+                    <span class="bg-secondary text-white badge py-2 px-3" style="margin-left:30px"> {{ hit['_source']['timestamp'] }}</span>
                   </div>
                 </div>
             </div>
@@ -164,22 +146,13 @@
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
-            <p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-              <!-- Copyright &copy; -->
+            <p>
                Made with <i class="icon-heart text-danger" aria-hidden="true"></i> by <a href="https://github.com/CS172-UCR/finalproject-yikes" target="_blank">Sabrina Wong</a>, UCR-CS172-W<script>document.write(new Date().getFullYear());</script>
             </p>
           </div>
         </div>
       </div>
     </footer>
-
-    <!-- loader -->
-<!--     <div id="ftco-loader" class="show fullscreen">
-      <svg class="circular" width="48px" height="48px">
-        <circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/>
-        <circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/>
-      </svg>
-    </div> -->
 
     <script src="static/js/jquery.min.js"></script>
     <script src="static/js/jquery-migrate-3.0.1.min.js"></script>
@@ -201,41 +174,6 @@
     <script src="static/js/main.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
-      // autocomplete
-      $('#user_input').on('input',function(e){
-        var user_input = $('#user_input').val();
-        var settings = {
-          "async": true,
-          "crossDomain": true,
-          "url": "/autocomplete",
-          "method": "POST",
-          "headers": {
-            "cache-control": "no-cache",
-            "Postman-Token": "81c3e2dd-e8d2-40ce-ab12-8a720bfb0fe2"
-          },
-          "processData": false,
-          data: "input=" + user_input
-        }
-
-        $.ajax(settings).done(function (response) {
-          console.log(response);
-          var obj = JSON.parse(response);
-          console.log("Object:",obj);
-          var data = obj.autocomplete;
-          console.log("Data:",data);
-          console.log(data.length);
-          title_data = data[0]["options"];
-          titles = []
-          for(var i=0;i<title_data.length;i++){
-            titles.push(title_data[i]["text"]);
-          }
-          console.log(titles);
-          $("#user_input").autocomplete({
-             source: screen_name
-          });
-        });
-      });
-
       // drag to tutorial_list division
       if({{ res['hits']['total'] }}>0){
         $('html, body').animate({

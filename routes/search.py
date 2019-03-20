@@ -18,7 +18,7 @@ def index():
             "query": {
                 "match_all": {}
             },
-            "size": 50
+            "size":1000 
         }
         response = requests.get(url, data=json.dumps(query),headers=headers)
         response_dict_data = json.loads(str(response.text))
@@ -35,7 +35,7 @@ def index():
                 ],
                 "query": {
                     "multi_match":{
-                        # "_all": search_term,
+                        "type": "most_fields",
                         "query": search_term,
                         "fields": ["screen_name", "tweet", "location", "hashtags"]
                     }
@@ -45,7 +45,7 @@ def index():
                         "_all": {}
                     }
                 },
-                "size": 50,
+                "size": 20,
             }
 
             url = "http://elasticsearch:9200/twitter/tweets/_search"
@@ -53,27 +53,3 @@ def index():
             response_dict_data = json.loads(str(response.text))
             print(response_dict_data)
             return render_template('search.html', res=response_dict_data)
-
-@search_blueprint.route("/autocomplete",methods=['POST'],endpoint='autocomplete')
-def autocomplete():
-    if request.method == 'POST':
-        search_term = request.form["input"]
-        print("POST request called")
-        print(search_term)
-        payload ={
-          "autocomplete" : {
-                "text" : str(search_term),
-                "completion" : {
-                    "field" : {
-                        "suggested_screen_name", 
-                        "suggested_location", 
-                        "suggested_hashtags"
-                    }
-                }
-            }
-        }
-        payload = json.dumps(payload)
-        url="http://elasticsearch:9200/autocomplete/_suggest"
-        response = requests.request("GET", url, data=payload, headers=headers)
-        response_dict_data = json.loads(str(response.text))
-        return json.dumps(response_dict_data)

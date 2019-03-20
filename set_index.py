@@ -16,7 +16,11 @@ if __name__ == '__main__':
 	payload = {
 		"template": "twitter",
 		"settings": {
-			"number_of_shards": 5
+			"number_of_shards": 5,
+        	"index" : {
+	            "sort.field" : "timestamp", 
+	            "sort.order" : "desc" 
+	        }
 		},
 		"mappings":{
 			"tweets":{
@@ -68,31 +72,3 @@ if __name__ == '__main__':
 	response = requests.request("PUT", url)
 	if(response.status_code == 200):
 		print("2. Created an index: twitter")
-
-	url = "http://localhost:9200/autocomplete"
-	json_data = check_if_index_present(url)
-	if(not 'error' in json_data):
-		print("5. Deleted an index: autocomplete")
-		response = requests.request('DELETE', url)
-
-	payload = {
-	  	"mappings": {
-	   		"titles" : {
-	    		"properties" : {
-		      		"title" : { "type" : "string" },
-		        	"title_suggest" : {
-		         		"type" :     "completion",
-			          	"analyzer" :  "case_insensitive_sort",
-			          	"search_analyzer" : "standard",
-			          	"preserve_position_increments": False,
-			          	"preserve_separators": False
-	    			}
-	    		}
-			}
-	  	}
-	}
-  
-	payload = json.dumps(payload)
-	response = requests.request("PUT", url, data=payload, headers=headers)
-	if(response.status_code == 200):
-		print("6. Created an index: autocomplete")
