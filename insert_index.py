@@ -1,4 +1,10 @@
-import urllib2
+try:
+    # For Python 3.0 and later
+    from urllib.request import urlopen
+except ImportError:
+    # Fall back to Python 2's urllib2
+    from urllib2 import urlopen
+
 from bs4 import BeautifulSoup
 import requests, json, os, re
 
@@ -8,7 +14,7 @@ def GetUrlTitles(urls):
 	urlTitles = []
 	if urls:
 		for url in urls:
-			soup = BeautifulSoup(urllib2.urlopen(url['url']), "html.parser")
+			soup = BeautifulSoup(urlopen(url['url']), "html.parser")
 			# if soup not in urlTitles:
 			urlTitles.append(soup.title.string)
 	return urlTitles

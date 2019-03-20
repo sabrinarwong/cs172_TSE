@@ -1,14 +1,27 @@
 # Final Project
 Twitter Search Engine
 
-## Running PS2
+## Running Final Project
+This system uses Docker to run ElasticSearch and Flask.
+
+### Pre-Installations
+
+// install docker
+// pip install docker-compose
+
+### To Run System
 Run the following commands:
 
 ```bash
 git clone https://github.com/CS172-UCR/finalproject-yikes.git;
 cd finalproject-yikes;
-
+docker pull sabrinarwong/finalproject-yikes:1.0.0; 
+docker-compose up;
+docker-compose down;
 ```
+
+To quit docker, ctrl+c;
+
 
 ## About
 Using Twitter Stream API to retrieve realtime tweets geo-tagged in the San Francisco, CA area.

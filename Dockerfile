@@ -20,6 +20,7 @@ ENV PYTHONUNBUFFERED=0
 
 # It executes the command python app.py in the app directory.
 # start gunicorn
+
 CMD ["gunicorn","--config", "/app/gunicorn_config.py" ,"app:app"]
 
 EXPOSE 8005

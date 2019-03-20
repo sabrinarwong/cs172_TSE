@@ -15,7 +15,8 @@ services:
       - "9200:9200"
 
   twitter:
-    build: .
+    depends_on: 
+      - elasticsearch
     image: "sabrinarwong/finalproject-yikes:1.0.0"
     networks:
       - frontend

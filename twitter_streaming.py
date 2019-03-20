@@ -32,6 +32,7 @@ if __name__ == '__main__':
 	# initialize
 	if os.path.isfile(filename):
 		os.remove(filename)		# big json file
+		print("fetched_tweets.txt removed")
 
 	#filter Twitter Streams to capture data by location (san francisco) 
 	with open(filename, "a+") as tf:
