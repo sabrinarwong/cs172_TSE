@@ -18,6 +18,9 @@ def index():
             "query": {
                 "match_all": {}
             },
+            "sort":[
+                {"timestamp": "desc"}
+            ],
             "size":1000 
         }
         response = requests.get(url, data=json.dumps(query),headers=headers)
