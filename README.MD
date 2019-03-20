@@ -20,7 +20,7 @@ docker-compose up;
 docker-compose down;
 ```
 
-To quit docker, ctrl+c;
+To quit docker, ctrl+cgit ;
 
 
 ## About
