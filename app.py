@@ -27,12 +27,12 @@ from routes.search import search_blueprint
 # import subprocess
 # import os
 # print("Creating index from json.")
+# subprocess.call("json_index.sh", shell=True)
 # print("Index created.")
 
 app = Flask(__name__)
 app.register_blueprint(search_blueprint)
 
 if __name__ == "__main__":
-	# subprocess.call("json_index.sh", shell=True)
 
 	app.run("0.0.0.0",port=8005,debug=False,threaded=True)

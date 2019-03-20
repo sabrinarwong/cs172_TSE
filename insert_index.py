@@ -6,7 +6,7 @@ except ImportError:
     from urllib2 import urlopen
 
 from bs4 import BeautifulSoup
-import requests, json, os, re
+import requests, json, os, re, sys
 
 filename = 'data/fetched_tweets.json'
 
@@ -68,7 +68,7 @@ def parseToES(tweet):
 
 if __name__ == '__main__':
 	# initialize
-	if os.path.isfile(filename):#and es.indices.exists(index = 'twitter'):
+	if os.path.isfile(filename) and os.stat(filename).st_size > 0:
 		with open(filename, "r+") as tf:
 			for line in tf:
 				tweet = json.loads(line)

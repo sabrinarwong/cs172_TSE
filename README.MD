@@ -6,8 +6,13 @@ This system uses Docker to run ElasticSearch and Flask.
 
 ### Pre-Installations
 
-// install docker
-// pip install docker-compose
+Install docker and launch:
+<https://www.docker.com/get-started>
+
+Install docker-compose to build application:
+```bash
+pip install docker-compose
+```
 
 ### To Run System
 Run the following commands:
@@ -29,7 +34,7 @@ cd finalproject-yikes;
 In browser:
 <http://0.0.0.0:8005>
 
-To quit docker, ctrl+cgit ;
+To quit docker, ctrl+c
 
 
 ## About
@@ -39,7 +44,7 @@ The `twitter_streaming.py` program streams for tweets and inserts into `fetched_
 
 As an extension to the parts above, I created a web-based interface using Flask, a python web-development framework. This interface allows the user to see all the tweets retrieved from the index in the first page. Upon querying, the resulting page shows tweets relevant to the user's input and a score on the right side. Scoring, sorting, and ranking are all done with ElasticSeach. Scoring is the sum of all fields relevant to query.
 
-More information about this project in the `FinalReport.pdf`
+More information about this project in the `FinalReport.pdf`.
 
 ## Contributing
 
