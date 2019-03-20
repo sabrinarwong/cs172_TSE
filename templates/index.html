@@ -129,7 +129,6 @@
                 <div class="job-post-item-header d-flex align-items-center">
                   <h3 class="mr-3 text-black h3" style="display:inline-block; margin-bottom:10px"">@{{ hit['_source']['screen_name'] }}</h3>
                   <span class="bg-secondary text-white badge py-2 px-3" style="display:inline-block;"> {{ hit['_source']['location'] }}</span>
-                  <span class="bg-secondary text-white badge py-2 px-3" style="display:inline-block; margin-right:20px; float:right;">{{ hit['_score'] }}</span>
                   <div class="mb-4 mb-md-0 mr-5">
                     <span class="bg-secondary text-white badge py-2 px-3" style="display:block; margin-left:30px">{{ hit['_source']['tweet'] }}</span>
                     <span class="bg-secondary text-white badge py-2 px-3" style="margin-left:30px"> {{ hit['_source']['timestamp'] }}</span>
