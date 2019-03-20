@@ -19,6 +19,15 @@ docker pull sabrinarwong/finalproject-yikes:1.0.0;
 docker-compose up;
 docker-compose down;
 ```
+To load index,
+In a separate terminal:
+```bash
+cd finalproject-yikes;
+./json_index.sh
+```
+
+In browser:
+<http://0.0.0.0:8005>
 
 To quit docker, ctrl+cgit ;
 
